@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { useState } from "react";
+import { useStore } from "react-redux";
 
 const Container = styled.div`
   padding: 10px;
@@ -17,10 +19,21 @@ const Container = styled.div`
 `;
 
 const CountdownArea = () => {
+  const store = useStore();
+
+  const [min, setMin] = useState("00");
+  const [sec, setSec] = useState("00");
+
+  store.subscribe(() => {
+    const start = store.getState().countdownReducer.start;
+    setMin(start.min);
+    setSec(start.sec);
+  });
+
   return (
     <Container>
       <div className="countdown">
-        00:00
+        {min.length > 1 ? min : `0${min}`}:{String(sec).length > 1 ? sec : `0${sec}`}
       </div>
     </Container>
   );
