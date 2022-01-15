@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Candidate from "./Candidate";
-
 import { useState } from "react";
+import { useStore } from "react-redux";
+import { reducer } from "Lottery/store";
 
 import { generateCandidates } from "../../helpers/generator";
 
@@ -31,7 +32,8 @@ const Container = styled.div`
         font-size: 20px;
         font-weight: bold;
       }
-      .generate-button {
+      .generate-button,
+      .clear-button {
         width: 70px;
         height: 25px;
         transition: .3s;
@@ -46,6 +48,9 @@ const Container = styled.div`
       }
       .generate-button:hover {
         background: #53b69d;
+      }
+      .clear-button:hover {
+        background: #e07a5b;
       }
     }
 
@@ -67,17 +72,36 @@ const Container = styled.div`
 `;
 
 const CandidateBlock = () => {
-  const [candidates, setCandidates] = useState([]);
+  const store = useStore();
+  const [candidates, setCandidates] = useState(store.getState().candidateReducer.candidates);
 
+  const clearCandidates = () => {
+    const candidates = [];
+    const action = {
+      type: "candidate/set",
+      candidates
+    }
+    store.dispatch(action);
+  }
   const getCandidates =() => {
-    candidates = setCandidates(generateCandidates(10));
+    const candidates = generateCandidates(10);
+    const action = {
+      type: "candidate/set",
+      candidates: candidates
+    }
+    store.dispatch(action);
   };
+
+  store.subscribe(() => {
+    setCandidates(store.getState().candidateReducer.candidates);
+  });
 
   return (
     <Container>
       <div className="content">
         <div className="panel">
           <div className="title">參與抽獎名單</div>
+          <div className="clear-button" onClick={clearCandidates}>清除</div>
           <div className="generate-button" onClick={getCandidates}>隨機產生</div>
         </div>
         <div className="candidate-content-wrapper">

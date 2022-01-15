@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { useRef } from "react";
+import { useStore } from "react-redux";
 
 const Container = styled.div`
   background: white;
@@ -14,6 +15,13 @@ const Container = styled.div`
   .setting-block {
     display: flex;
     align-items: center;
+
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
 
     input {
       height: 25px;
@@ -46,17 +54,38 @@ const Container = styled.div`
 `;
 
 const TimeSetting = () => {
+  const store = useStore();
   const minuteRef = useRef(null);
 
   const setTime = () => {
-    alert(minuteRef.current.value);
+    const time = parseFloat(minuteRef.current.value);
+    
+    if (time <= 0 || time > 5) {
+      alert("請輸入 0 ~ 5 之間的數目");
+      return;
+    }
+
+    const min = parseInt(time);
+    const sec = Math.round((time - min) * 60);
+
+    const action = {
+      type: "countdown/set",
+      start: {
+        min,
+        sec
+      }
+    }
+
+    console.log(action);
+
+    store.dispatch(action);
   }
 
   return (
     <Container>
       <div className="title">抽獎時間</div>
       <div className="setting-block">
-        <input ref={minuteRef} type="text" />
+        <input ref={minuteRef} type="number" />
         <div className="suffix">分鐘</div>
         <div className="apply-button" onClick={setTime}>設定</div>
       </div>
