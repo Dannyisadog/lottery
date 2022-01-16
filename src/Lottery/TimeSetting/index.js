@@ -76,7 +76,7 @@ const TimeSetting = () => {
     if (status != countdown_status.COUNTDOWN_PENDING) return;
 
     if (!time || time <= 0 || time > 5) {
-      alert("請輸入 0 ~ 5 之間的數目");
+      alert("請輸入 0 ~ 5 之間的數字");
       return;
     }
 
@@ -102,7 +102,7 @@ const TimeSetting = () => {
     <Container status={status}>
       <div className="title">抽獎時間</div>
       <div className="setting-block">
-        <input ref={minuteRef} type="number" defaultValue="1.01" />
+        <input ref={minuteRef} type="number" defaultValue="0.5" />
         <div className="suffix">分鐘</div>
         <div className="apply-button" onClick={setTime}>設定</div>
       </div>
