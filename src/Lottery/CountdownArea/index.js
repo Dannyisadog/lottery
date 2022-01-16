@@ -64,10 +64,7 @@ const CountdownArea = () => {
         }
         store.dispatch(action);
         clearInterval(countDownTimer)
-        alert("時間到")
       }
-
-      console.log(remain);
     }, 1000)
   }, [status]);
 
