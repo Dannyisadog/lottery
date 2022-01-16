@@ -5,14 +5,16 @@ const Container = styled.div`
   width: 100px;
   height: 100%;
   border-radius: 4px;
-  background: pink;
+  background: white;
   display: flex;
+  color: #333;
   
   .candidate-name {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
+    font-size: 20px;
   }
 `;
 
@@ -27,7 +29,7 @@ const Candidate = ({name}) => {
 }
 
 Candidate.defaultProps = {
-  name: "candidate name"
+  name: "name"
 }
 
 Candidate.propTypes = {
