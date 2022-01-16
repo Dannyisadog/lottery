@@ -43,7 +43,7 @@ const Container = styled.div`
         border-radius: 4px;
         border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "white" : "gray"};
         color: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "white" : "gray"};
-        cursor: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "cursor" : "not-allowed"};
+        cursor: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "pointer" : "not-allowed"};
         display: flex;
         align-items:center; 
         justify-content: center;
@@ -66,6 +66,9 @@ const Container = styled.div`
       align-items: center;
       overflow-x: scroll;
       overflow-y: hidden;
+    }
+    .blank {
+      width: 15px;
     }
 
     .candidate-wrapper {
@@ -130,6 +133,7 @@ const CandidateBlock = () => {
             })
           }
         </div>
+        <div className="blank" />
       </div>
     </Container>
   );
