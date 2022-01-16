@@ -65,8 +65,6 @@ const CountdownArea = () => {
         store.dispatch(action);
         clearInterval(countDownTimer)
       }
-
-      console.log(remain);
     }, 1000)
   }, [status]);
 
