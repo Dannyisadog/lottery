@@ -1,13 +1,18 @@
 import styled from "styled-components";
-import { useRef } from "react";
+import { useEffect, useRef, useState} from "react";
 import { useStore } from "react-redux";
+import { countdown_status } from "Lottery/store";
 
 const Container = styled.div`
-  background: white;
-  padding: 10px;
-  width: 250px;
+  border: 1px solid white;
+  color: white;
+  width: 100%;
   height: 100px;
   border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
   .title {
     font-size: 24px;
     font-weight: bold;
@@ -30,6 +35,9 @@ const Container = styled.div`
       border-radius: 4px;
       margin-right: 5px;
       padding: 0px 10px;
+      font-size: 18px;
+      background: transparent;
+      color: white;
     }
 
     .suffix {
@@ -38,17 +46,16 @@ const Container = styled.div`
 
     .apply-button {
       padding: 5px 10px;
-      color: white;
-      background: #333;
-      border: 0;
+      border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "white" : "gray"};
       border-radius: 4px;
-      cursor: pointer;
+      cursor: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "pointer" : "not-allowed"};;
       transition: .3s;
+      color: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "white" : "gray"};
     }
 
     .apply-button:hover {
-      color: white;
-      background: #3b91d6;
+      border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};
+      background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#3b91d6" : "transparent"};;
     }
   }
 `;
@@ -56,11 +63,19 @@ const Container = styled.div`
 const TimeSetting = () => {
   const store = useStore();
   const minuteRef = useRef(null);
+  const [status, setStatus] = useState(countdown_status.COUNTDOWN_PENDING);
+
+  store.subscribe(() => {
+    const data = store.getState().countdownReducer.data;
+    setStatus(data.status);
+  });
 
   const setTime = () => {
     const time = parseFloat(minuteRef.current.value);
     
-    if (time <= 0 || time > 5) {
+    if (status != countdown_status.COUNTDOWN_PENDING) return;
+
+    if (!time || time <= 0 || time > 5) {
       alert("請輸入 0 ~ 5 之間的數目");
       return;
     }
@@ -70,22 +85,24 @@ const TimeSetting = () => {
 
     const action = {
       type: "countdown/set",
-      start: {
+      data: {
         min,
         sec
       }
     }
 
-    console.log(action);
-
     store.dispatch(action);
   }
 
+  useEffect(() => {
+    setTime();
+  }, []);
+
   return (
-    <Container>
+    <Container status={status}>
       <div className="title">抽獎時間</div>
       <div className="setting-block">
-        <input ref={minuteRef} type="number" />
+        <input ref={minuteRef} type="number" defaultValue="1.01" />
         <div className="suffix">分鐘</div>
         <div className="apply-button" onClick={setTime}>設定</div>
       </div>

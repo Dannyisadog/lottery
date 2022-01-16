@@ -11,15 +11,22 @@ import store from "./store";
 
 const Container = styled.div`
   padding: 15px;
-
   .wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+    justify-content: space-between;
     display: flex;
-    .countdown-area-wrapper {
-      margin-left: 20px;
-    }
+    .time-setting-wrapper,
+    .countdown-area-wrapper,
     .start-button-wrapper {
-      margin-left: 20px;
+      width: 30%;
     }
+  }
+  .candidate-block-wrapper {
+    margin-top: 20px;
+  }
+  .result-wrapper {
+    margin-top: 20px;
   }
 `;
 

@@ -1,12 +1,14 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useStore } from "react-redux";
 
+import { countdown_status } from "Lottery/store";
+
 const Container = styled.div`
-  padding: 10px;
-  background: white;
+  border: 1px solid white;
+  color: white;
   border-radius: 4px;
-  width: 200px;
+  width: 100%;
   height: 100px;
 
   .countdown {
@@ -14,26 +16,66 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size:70px;
+    font-size: 60px;
   }
 `;
 
 const CountdownArea = () => {
   const store = useStore();
 
-  const [min, setMin] = useState("00");
-  const [sec, setSec] = useState("00");
+  const [min, setMin] = useState(0);
+  const [sec, setSec] = useState(0);
+  const [status, setStatus] = useState(countdown_status.COUNTDOWN_PENDING);
 
   store.subscribe(() => {
-    const start = store.getState().countdownReducer.start;
-    setMin(start.min);
-    setSec(start.sec);
+    const data = store.getState().countdownReducer.data;
+    setMin(data.min);
+    setSec(data.sec);
+    setStatus(data.status);
   });
+
+  const [remainMin, setRemainMin] = useState(0);
+  const [remainSecond, setRemainSecond] = useState(0)
+
+  useEffect(() => {
+    const countDownSecond = min * 60 + sec;
+    setRemainMin(Math.floor(countDownSecond / 60));
+    setRemainSecond(countDownSecond - 60 * Math.floor(countDownSecond / 60));
+  }, [min, sec, status]);
+
+  useEffect(() => {
+    const countDownSecond = min * 60 + sec;
+
+    if (countDownSecond == 0 || status == countdown_status.COUNTDOWN_PENDING) return;
+
+    const startTime = Date.now()
+    const countDownTimer = setInterval(() => {
+      const pastSeconds = parseInt((Date.now() - startTime) / 1000)
+      const remain = (countDownSecond - pastSeconds)
+
+      setRemainMin(Math.floor(remain / 60));
+      setRemainSecond(remain < 0 ? 0 : remain - (60 * Math.floor(remain / 60)));
+      if (remain <= 0) {
+        const action = {
+          type: "countdown/setStatus",
+          data: {
+            status: countdown_status.COUNTDOWN_PENDING
+          }
+        }
+        store.dispatch(action);
+        clearInterval(countDownTimer)
+        alert("時間到")
+      }
+
+      console.log(remain);
+    }, 1000)
+  }, [status]);
+
 
   return (
     <Container>
       <div className="countdown">
-        {min.length > 1 ? min : `0${min}`}:{String(sec).length > 1 ? sec : `0${sec}`}
+        {String(remainMin).length > 1 ? remainMin : `0${remainMin}`}:{String(remainSecond).length > 1 ? remainSecond : `0${remainSecond}`}
       </div>
     </Container>
   );
