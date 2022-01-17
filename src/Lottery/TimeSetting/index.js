@@ -80,6 +80,10 @@ const TimeSetting = () => {
       return;
     }
 
+    if (time * 60 < 1) {
+      alert("數字太小了");
+    }
+
     const min = parseInt(time);
     const sec = Math.round((time - min) * 60);
 

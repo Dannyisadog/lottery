@@ -35,7 +35,7 @@ const StartButton = () => {
   });
 
   const start = () => {
-    const candidates = store.getState().candidateReducer.candidates;
+    const candidates = store.getState().candidateReducer.data.candidates;
     const data = store.getState().countdownReducer.data;
     
     if (data.status != countdown_status.COUNTDOWN_PENDING) return;

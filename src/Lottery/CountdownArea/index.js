@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { useState, useEffect } from "react";
 import { useStore } from "react-redux";
+import { draw } from "helpers/drawer";
 
 import { countdown_status } from "Lottery/store";
 
@@ -63,6 +64,14 @@ const CountdownArea = () => {
           }
         }
         store.dispatch(action);
+
+        const drawAction = {
+          type: "candidate/draw",
+          random_index: draw(store.getState().candidateReducer.data.candidates.length)
+        }
+
+        store.dispatch(drawAction);
+      
         clearInterval(countDownTimer)
       }
     }, 1000)

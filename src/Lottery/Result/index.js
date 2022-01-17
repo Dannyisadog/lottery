@@ -1,4 +1,6 @@
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import { useStore } from "react-redux";
 
 const Container = styled.div`
   margin: 0 auto;
@@ -17,14 +19,35 @@ const Container = styled.div`
     border: 1px solid white;
     max-width: 100%;
     height: 100%;
+    color: white;
+    font-size: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
 const Result = () => {
+  const store = useStore();
+  const [winner, setWinner] = useState(null);
+  const [winnerIndex, setWinnerIndex] = useState(store.getState().candidateReducer.data.random_index);
+
+  store.subscribe(() => {
+    setWinnerIndex(store.getState().candidateReducer.data.random_index);
+  });
+
+  useEffect(() => {
+    setWinner(store.getState().candidateReducer.data.candidates[winnerIndex]);
+  }, [winnerIndex]);
+  
   return (
     <Container>
       <div className="title">結果</div>
-      <div className="content"></div>
+      <div className="content">
+        <div>{winner && "Congrats！"}</div>
+        <div>{winner}</div>
+      </div>
     </Container>
   );
 }
