@@ -27,10 +27,17 @@ const countdownReducer = (state= {
   }
 }
 
-const candidateReducer = (state = {candidates: []}, action) => {
+const candidateReducer = (state = {
+  data: {
+    candidates: [],
+    random_index: -1
+  }
+}, action) => {
   switch (action.type) {
     case "candidate/set":
-      return { candidates: action.candidates }
+      return { data: { candidates: action.candidates, random_index: state.data.random_index} }
+    case "candidate/draw":
+      return { data: { candidates: state.data.candidates, random_index: action.random_index} }
     default:
       return state
   }

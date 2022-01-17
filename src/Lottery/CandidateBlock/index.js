@@ -83,7 +83,7 @@ const Container = styled.div`
 
 const CandidateBlock = () => {
   const store = useStore();
-  const [candidates, setCandidates] = useState(store.getState().candidateReducer.candidates);
+  const [candidates, setCandidates] = useState(store.getState().candidateReducer.data.candidates);
   const [status, setStatus] = useState(countdown_status.COUNTDOWN_PENDING);
 
   const clearCandidates = () => {
@@ -106,7 +106,7 @@ const CandidateBlock = () => {
   };
 
   store.subscribe(() => {
-    setCandidates(store.getState().candidateReducer.candidates);
+    setCandidates(store.getState().candidateReducer.data.candidates);
     setStatus(store.getState().countdownReducer.data.status);
   });
 
@@ -127,7 +127,7 @@ const CandidateBlock = () => {
             candidates.map((candidate, index) => {
               return (
                 <div className="candidate-wrapper" key={index}>
-                  <Candidate />
+                  <Candidate name={candidate} />
                 </div>
               );
             })
