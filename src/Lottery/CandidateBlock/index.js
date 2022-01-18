@@ -54,12 +54,16 @@ const Container = styled.div`
         }
       }
       .generate-button:hover {
-        background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#53b69d" : "transparent"};
-        border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};;
+        @media (min-width: 800px) {
+          background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#53b69d" : "transparent"};
+          border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};;
+        }
       }
       .clear-button:hover {
-        background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#e07a5b" : "transparent"};
-        border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};;
+        @media (min-width: 800px) {
+          background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#e07a5b" : "transparent"};
+          border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};;
+        }
       }
     }
 

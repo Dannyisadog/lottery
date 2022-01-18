@@ -21,9 +21,11 @@ const Container = styled.div`
   }
 
   :hover {
-    background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#3ed18c" : "transparent"};
-    color: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "white" : "727272"};
-    border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "white"};
+    @media (min-width: 800px) {
+      background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#3ed18c" : "transparent"};
+      color: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "white" : "727272"};
+      border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "white"}; 
+    }
   }
 `;
 
