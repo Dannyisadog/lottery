@@ -72,8 +72,10 @@ const Container = styled.div`
     }
 
     .apply-button:hover {
-      border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};
-      background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#3b91d6" : "transparent"};;
+      @media (min-width: 800px) {
+        border: 1px solid ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "transparent" : "gray"};
+        background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#3b91d6" : "transparent"};;
+      }
     }
   }
 `;
