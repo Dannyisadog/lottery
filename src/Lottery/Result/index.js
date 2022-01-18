@@ -20,11 +20,19 @@ const Container = styled.div`
     max-width: 100%;
     height: 100%;
     color: white;
-    font-size: 80px;
+    font-size: 100px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
+    @media (max-width: 800px) {
+      font-size: 12vw;
+    }
+
+    .winner-name {
+      color: #c96161;
+    }
   }
 `;
 
@@ -45,8 +53,8 @@ const Result = () => {
     <Container>
       <div className="title">結果</div>
       <div className="content">
-        <div>{winner && "Congrats！"}</div>
-        <div>{winner}</div>
+        <div>{winner && "Congrats !"}</div>
+        <div className="winner-name">{winner}</div>
       </div>
     </Container>
   );

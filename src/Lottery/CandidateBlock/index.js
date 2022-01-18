@@ -37,7 +37,7 @@ const Container = styled.div`
       .generate-button,
       .clear-button {
         width: 90px;
-        height: 50%;
+        height: 30px;
         transition: .3s;
         padding: 5px 10px;
         border-radius: 4px;
@@ -48,6 +48,10 @@ const Container = styled.div`
         align-items:center; 
         justify-content: center;
         margin-right: 10px;
+
+        @media (max-width: 800px) {
+          width: 10vw;
+        }
       }
       .generate-button:hover {
         background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#53b69d" : "transparent"};
@@ -118,11 +122,11 @@ const CandidateBlock = () => {
     <Container status={status}>
       <div className="title">參與抽獎名單</div>
       <div className="content">
+        <div className="candidate-content-wrapper">
         <div className="panel">
           <div className="clear-button" onClick={clearCandidates}>清除</div>
-          <div className="generate-button" onClick={getCandidates}>隨機產生</div>
+          <div className="generate-button" onClick={getCandidates}>隨機</div>
         </div>
-        <div className="candidate-content-wrapper">
           {
             candidates.map((candidate, index) => {
               return (

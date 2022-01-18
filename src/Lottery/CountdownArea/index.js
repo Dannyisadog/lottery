@@ -18,6 +18,9 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     font-size: 60px;
+    @media (max-width: 800px) {
+      font-size: 7vw;
+    }
   }
 `;
 
