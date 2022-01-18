@@ -5,7 +5,7 @@ import { useStore } from "react-redux";
 const Container = styled.div`
   margin: 0 auto;
   max-width: 800px;
-  height: 450px;
+  height: 400px;
 
   .title {
     font-size: 1.5em;
