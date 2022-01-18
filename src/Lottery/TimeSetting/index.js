@@ -13,13 +13,23 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+
   .title {
     font-size: 24px;
     font-weight: bold;
+
+    @media (max-width: 800px) {
+      display: none;
+    }
   }
   .setting-block {
     display: flex;
     align-items: center;
+
+    @media (max-width: 800px) {
+      flex-direction: column;
+      justify-content: center;
+    }
 
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -29,8 +39,8 @@ const Container = styled.div`
 
 
     input {
-      height: 25px;
-      width: 80px;
+      height: 30px;
+      width: 40px;
       border: 1px solid #cecece;
       border-radius: 4px;
       margin-right: 5px;
@@ -38,10 +48,18 @@ const Container = styled.div`
       font-size: 18px;
       background: transparent;
       color: white;
+      text-align: center;
+
+      @media (max-width: 800px) {
+        margin-right: 0;
+      }
     }
 
     .suffix {
-      margin-right: 20px;
+      margin-right: 5px;
+      @media (max-width: 800px) {
+        margin-right: 0;
+      }
     }
 
     .apply-button {

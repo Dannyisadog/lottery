@@ -16,6 +16,9 @@ const Container = styled.div`
   font-size: 50px;
   cursor: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "pointer" : "not-allowed"};
 
+  @media (max-width: 800px) {
+    font-size: 7vw;
+  }
 
   :hover {
     background: ${(props) => props.status == countdown_status.COUNTDOWN_PENDING ? "#3ed18c" : "transparent"};
